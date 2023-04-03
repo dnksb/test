@@ -65,7 +65,16 @@ public class DropDownShop : MonoBehaviour
 	    	DataBase.ExecuteQueryWithoutAnswer($"INSERT INTO 'all cars set' VALUES ('{car_uid}', 'wolga', 'wolga', 'wolga', 'wolga', 'wolga')");
 	     	DataBase.ExecuteQueryWithoutAnswer($"INSERT INTO 'car tech set' VALUES ('{car_uid}', '2', '2', '2', '2')");
 	    	break;
-	    
+	    case "Prius 20 cope":
+	    	DataBase.ExecuteQueryWithoutAnswer($"INSERT INTO '{nickname}' (id_car, car, car_power) VALUES ('{car_uid}', '{car_name}', 76)");
+	     	DataBase.ExecuteQueryWithoutAnswer($"INSERT INTO 'all cars set' VALUES ('{car_uid}', 'stock_prius20_cope_front_fender', 'stock_prius20_cope_back_fender', 'ralie_prius20_cope_front_bumper', 'stock_prius20_cope_back_bumper', 'stock_prius20_cope_threshold')");
+	     	DataBase.ExecuteQueryWithoutAnswer($"INSERT INTO 'car tech set' VALUES ('{car_uid}', '2', '2', '2', '2')");
+	    	break;
+	    case "Auris 2006":
+	    	DataBase.ExecuteQueryWithoutAnswer($"INSERT INTO '{nickname}' (id_car, car, car_power) VALUES ('{car_uid}', '{car_name}', 76)");
+	     	DataBase.ExecuteQueryWithoutAnswer($"INSERT INTO 'all cars set' VALUES ('{car_uid}', 'stock_auris_2006_front_fender', 'stock_auris_2006_back_fender', 'stock_auris_2006_front_bumper', 'stock_auris_2006_back_bumper', 'stock_auris_2006_threshold')");
+	     	DataBase.ExecuteQueryWithoutAnswer($"INSERT INTO 'car tech set' VALUES ('{car_uid}', '2', '2', '2', '2')");
+	    	break;
 	}    	
     }
     

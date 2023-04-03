@@ -4913,6 +4913,8 @@ MonoBehaviour:
   - {fileID: 1569688467342034176, guid: be0cd04eb546fe6a8bd28a4ebb5845be, type: 3}
   - {fileID: 6698028312956238264, guid: bbf18a8b8be90a3829db43c6ea0253b5, type: 3}
   - {fileID: 8861265633448283410, guid: dca674340fefeb7e18710f3e69bcc1dc, type: 3}
+  - {fileID: 141202591150013320, guid: 6f57e9643375c3bc6872c8d7be8a61fa, type: 3}
+  - {fileID: 1898914492450952549, guid: 343cbc3036efb0dab89b842b0f719ba4, type: 3}
   cars_front_fender:
   - {fileID: 1431556499589565881, guid: d727638af45dc98a6a5ac4ce07e26ef8, type: 3}
   - {fileID: 6445445733094010049, guid: c1bb9e48dbb1988a4b83594211e11de3, type: 3}
@@ -4920,6 +4922,8 @@ MonoBehaviour:
   - {fileID: 1339346510526797271, guid: 5bd54e4f7f54bcb8c89fc848281c118a, type: 3}
   - {fileID: 5780442681875864248, guid: dd3bf79af38ca4a22bde2e9b011e9c0f, type: 3}
   - {fileID: 958794955216176584, guid: 5f2a46dd06331a3dc9225aa60ab69be1, type: 3}
+  - {fileID: 4199793369247123181, guid: bb7f9a418d31f789f8230c738579b607, type: 3}
+  - {fileID: 6486192106707971986, guid: facf71cb4dce1a1a8ab15e34c5208ee8, type: 3}
   cars_back_fender:
   - {fileID: 2876132725853087826, guid: aa422769aff5cc26785a5002751e5ca8, type: 3}
   - {fileID: 8787205007439233521, guid: 6c46e8bc1bf340adabd991763c936d93, type: 3}
@@ -4927,6 +4931,8 @@ MonoBehaviour:
   - {fileID: 1882967751006079251, guid: 1cf0c6ae946f492bcb36c907d308b02b, type: 3}
   - {fileID: 861089897606549678, guid: e34ac010ea9a9aa7db56d6d150a8c056, type: 3}
   - {fileID: 958794955216176584, guid: da57e1a287180ca0eb6488bf4cc0e040, type: 3}
+  - {fileID: 2651234929551557135, guid: 089a32d85ab03a869b8fbd84a97d50df, type: 3}
+  - {fileID: 7680052711043200443, guid: e26ee81dde41f54548337c009838c983, type: 3}
   cars_front_bumper:
   - {fileID: 3726807051880725453, guid: a552b54cd603bd2d7a0694e965f52f01, type: 3}
   - {fileID: 203328123929712916, guid: 34c5a20c367c006e99355876333a1239, type: 3}
@@ -4934,6 +4940,8 @@ MonoBehaviour:
   - {fileID: 2287279277981345706, guid: e3be523544fb81d04bad365b6d933285, type: 3}
   - {fileID: 7171648458287208545, guid: 912ff8b69dc55bb88aa30bd6baa5beb9, type: 3}
   - {fileID: 958794955216176584, guid: 898bac24d28b206548dff5b168e86514, type: 3}
+  - {fileID: 284308464293255493, guid: c8142eee219143c529bc85ad776b9d00, type: 3}
+  - {fileID: 9119609715700968963, guid: 363c42653a3a62b3e8687ee6ddefd16e, type: 3}
   cars_back_bumper:
   - {fileID: 5797740721772962254, guid: 6307a9020ab9646daa693859763ce492, type: 3}
   - {fileID: 2511434297295477267, guid: 613b387932d2d22689f7aea9adb8e71c, type: 3}
@@ -4941,6 +4949,10 @@ MonoBehaviour:
   - {fileID: 4757697643026682004, guid: 8726683f5b78c4d15901774a53723c5b, type: 3}
   - {fileID: 4907804429778163536, guid: e930111ab210583da8dad10509665d5e, type: 3}
   - {fileID: 958794955216176584, guid: 898bac24d28b206548dff5b168e86514, type: 3}
+  - {fileID: 1785156249841900231, guid: 955163a3201a5005c8422d7e6191b25f, type: 3}
+  - {fileID: 3535043607123098565, guid: 48904e0cadeb64eb992fce5a2ac60922, type: 3}
+  - {fileID: 4744383157725814972, guid: d58fa24d6e6d9dd2b83a6f8f11b93e13, type: 3}
+  - {fileID: 6023822738170248359, guid: 1410740cb6aedcafcafc380b78944454, type: 3}
   cars_threshold:
   - {fileID: 3445720663257960053, guid: bf1ca0fbc22cf6b129c5ee93447a729a, type: 3}
   - {fileID: 4998177991351858941, guid: 67fbef7a3db7cd4829e3079362dc7fec, type: 3}
@@ -4948,6 +4960,8 @@ MonoBehaviour:
   - {fileID: 4230230610191561531, guid: d36d1bfbec8ae3329b27698fb111af95, type: 3}
   - {fileID: 9024137580743662370, guid: 34617ab12228563b392645c3932a227e, type: 3}
   - {fileID: 958794955216176584, guid: dee0ddcd78b038072bf395c2bc8cae92, type: 3}
+  - {fileID: 7047525700787049418, guid: 21ba596da04caf12f98fbd34b8107693, type: 3}
+  - {fileID: 2681772044554894711, guid: b96c08b424e50e9298fc986a9ef58d2b, type: 3}
   template_car: {fileID: 961753028}
   show_cars: {fileID: 1641946951}
 --- !u!4 &1110975379

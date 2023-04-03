@@ -23,8 +23,8 @@ public class CarController :MonoBehaviour
 
 	float MaxMotorTorque;
 	float MaxSteerAngle { get { return CarConfig.MaxSteerAngle; } }
-	DriveType DriveType { get { return CarConfig.DriveType; } }
-	bool AutomaticGearBox { get { return CarConfig.AutomaticGearBox; } }
+	public DriveType Drivetype { get { return CarConfig.DriveType; } set => CarConfig.DriveType = value; }
+	public bool AutomaticGearbox { get { return CarConfig.AutomaticGearBox; } set => CarConfig.AutomaticGearBox = value; }
 	AnimationCurve MotorTorqueFromRpmCurve { get { return CarConfig.MotorTorqueFromRpmCurve; } }
 	float MaxRPM { get { return CarConfig.MaxRPM; } }
 	float MinRPM { get { return CarConfig.MinRPM; } }
@@ -105,14 +105,14 @@ public class CarController :MonoBehaviour
 		};
 
 		//Set drive wheel.
-		switch (DriveType)
+		switch (Drivetype)
 		{
 			case DriveType.AWD:
-			FirstDriveWheel = 0;
-			LastDriveWheel = 3;
+			FirstDriveWheel = 5;
+			LastDriveWheel = 5;
 			break;
 			case DriveType.FWD:
-			FirstDriveWheel = 0;
+			FirstDriveWheel = 5;
 			LastDriveWheel = 1;
 			break;
 			case DriveType.RWD:
@@ -274,6 +274,9 @@ public class CarController :MonoBehaviour
 	public float GetMaxRPM { get { return MaxRPM; } }
 	public float GetMinRPM { get { return MinRPM; } }
 	public float GetInCutOffRPM { get { return CutOffRPM - CutOffOffsetRPM; } }
+	
+	[SerializeField] KeyCode UpGear; 
+	[SerializeField] KeyCode DownGear; 
 
 	float CutOffTimer;
 	bool InCutOff;
@@ -380,7 +383,7 @@ public class CarController :MonoBehaviour
 		}
 
 		//Automatic gearbox logic. 
-		if (AutomaticGearBox)
+		if (AutomaticGearbox)
 		{
 
 			bool forwardIsSlip = false;
@@ -425,6 +428,33 @@ public class CarController :MonoBehaviour
 			else if (CarDirection == 0 && CurrentAcceleration == 0)
 			{
 				CurrentGear = 0;
+			}
+		}
+		else
+		{
+			float prevRatio = 0;
+			float newRatio = 0;
+			if (Input.GetKeyDown (UpGear))
+			{
+				if(CurrentGear < 5)
+				{
+					prevRatio = AllGearsRatio[CurrentGearIndex];
+					CurrentGear++;
+					newRatio = AllGearsRatio[CurrentGearIndex];
+				}
+			}
+			else if (Input.GetKeyDown (DownGear))
+			{
+				if(CurrentGear > -1)
+				{
+					prevRatio = AllGearsRatio[CurrentGearIndex];
+					CurrentGear--;
+					newRatio = AllGearsRatio[CurrentGearIndex];
+				}
+			}
+			if (!Mathf.Approximately (prevRatio, 0) && !Mathf.Approximately (newRatio, 0))
+			{
+				EngineRPM = Mathf.Lerp (EngineRPM, EngineRPM * (newRatio / prevRatio), RpmEngineToRpmWheelsLerpSpeed * Time.fixedDeltaTime); //EngineRPM * (prevRatio / newRatio);// 
 			}
 		}
 
