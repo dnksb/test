@@ -17,10 +17,16 @@ public class ChoiceUserControler : MonoBehaviour
     [SerializeField] private List<GameObject> clones;
 
     [SerializeField] private static string player_nickname;
-
+    [SerializeField] private static int player_money;
+    
     public static string GetPlayerNickname()
     {
         return player_nickname;
+    }
+    
+    public static int GetPlayerMoney()
+    {
+        return player_money;
     }
 
     public void UpdateTable()
@@ -49,7 +55,7 @@ public class ChoiceUserControler : MonoBehaviour
 
             clones[clones.Count - 1].GetComponent<RectTransform>().SetParent(content.transform);
             clones[clones.Count - 1].SetActive(true);
-            clones[clones.Count - 1].transform.GetChild(0).GetChild(0).gameObject.GetComponent<Text>().text = $"уровень: {cells[2].ToString()}";
+            clones[clones.Count - 1].transform.GetChild(0).GetChild(0).gameObject.GetComponent<Text>().text = $"бюджет: {cells[2].ToString()}";
             clones[clones.Count - 1].transform.GetChild(0).GetChild(1).gameObject.GetComponent<Text>().text = $"{cells[1].ToString()}";
         }
     }

@@ -108,9 +108,34 @@ public class SettingsCar : MonoBehaviour
         }
     }
 
+    public bool CheckPrice(int price)
+    {
+    	DataTable scoreboard;
+        scoreboard = DataBase.GetTable($"SELECT level FROM players WHERE nickname = '{ChoiceCarMenu.Nickname}'");
+        
+        int maney = 0;
+        
+        foreach (DataRow row in scoreboard.Rows)
+        {
+            var cells = row.ItemArray;
+
+	    maney = int.Parse(cells[0].ToString());
+        }
+        
+        if(maney < price)
+        {
+        	return false;
+        }
+        var tmp1 = DataBase.ExecuteQueryWithAnswer($"UPDATE players SET level = {maney - price} WHERE nickname = '{ChoiceCarMenu.Nickname}'");
+    	return true;
+    }
+
     public void SaveToDB()
     {
+    	if(CheckPrice(10))
+   	{
         DataBase.ExecuteQueryWithoutAnswer($"UPDATE 'car tech set' SET front_front =  '{front_car_front_slide}', front_side = '{front_car_side_slide}', back_front = '{back_car_front_slide}', back_side = '{back_car_side_slide}' WHERE car_id = '{id_car_text}'");
+        }
     }
 
 }

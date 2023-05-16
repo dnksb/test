@@ -42,7 +42,7 @@ public class AddPlayerControl : MonoBehaviour
         }
         else
         {
-            DataBase.ExecuteQueryWithoutAnswer($"INSERT INTO players (nickname, level) VALUES ('{nickname}',{1})");
+            DataBase.ExecuteQueryWithoutAnswer($"INSERT INTO players (nickname, level) VALUES ('{nickname}',{500})");
         }
     }
 

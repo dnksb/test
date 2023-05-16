@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using System.Data;
 using System;
 
+
 enum PartsName
 {
     Threshold, FrontFender, FrontBumper, BackFender, BackBumper
@@ -92,6 +93,28 @@ public class DropDownController : MonoBehaviour
         parts.AddOptions(part_list);
     }
 
+    public bool CheckPrice(int price)
+    {
+    	DataTable scoreboard;
+        scoreboard = DataBase.GetTable($"SELECT level FROM players WHERE nickname = '{ChoiceCarMenu.Nickname}'");
+        
+        int maney = 0;
+        
+        foreach (DataRow row in scoreboard.Rows)
+        {
+            var cells = row.ItemArray;
+
+	    maney = int.Parse(cells[0].ToString());
+        }
+        
+        if(maney < price)
+        {
+        	return false;
+        }
+        var tmp1 = DataBase.ExecuteQueryWithAnswer($"UPDATE players SET level = {maney - price} WHERE nickname = '{ChoiceCarMenu.Nickname}'");
+    	return true;
+    }
+
     public void UpdateParts()
     {
         //Debug.Log("--------------");
@@ -99,8 +122,11 @@ public class DropDownController : MonoBehaviour
         //Debug.Log("--------------");
         //DataTable scoreboard = DataBase.GetTable($"UPDATE 'all cars set' SET '{part_name}' = '{part_list[parts.value]}' WHERE id_car = '{ChoiceCarMenu.id_car_text}'");
         //scoreboard.
-        var tmp = DataBase.ExecuteQueryWithAnswer($"UPDATE 'all cars set' SET '{part_name}' = '{part_list[parts.value]}' WHERE id_car = '{ChoiceCarMenu.id_car_text}'");
+        if(CheckPrice(10))
+   	 {
+   	     var tmp = DataBase.ExecuteQueryWithAnswer($"UPDATE 'all cars set' SET '{part_name}' = '{part_list[parts.value]}' WHERE id_car = '{ChoiceCarMenu.id_car_text}'");
         Debug.Log(tmp);
+        }
         //ChoiceCarMenu.Updatecar();
 
     }
