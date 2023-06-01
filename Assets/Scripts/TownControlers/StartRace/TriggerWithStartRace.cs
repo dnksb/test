@@ -13,6 +13,17 @@ public class TriggerWithStartRace : MonoBehaviour
     public GameObject Race5;
     public GameObject Bouling;
 
+    void Start()
+    {
+    	  GameObject UI = GameObject.Find("UI");
+         Race1 = UI.transform.GetChild(2).gameObject;
+         Race2 = UI.transform.GetChild(3).gameObject;
+         Race3 = UI.transform.GetChild(4).gameObject;
+         Race4 = UI.transform.GetChild(5).gameObject;
+         Race5 = UI.transform.GetChild(6).gameObject;
+         Bouling = UI.transform.GetChild(7).gameObject;
+    }
+
     void OnTriggerEnter(Collider other)
     {
         if(other.tag == "Race1")

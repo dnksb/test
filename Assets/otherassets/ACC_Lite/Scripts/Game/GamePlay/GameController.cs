@@ -16,9 +16,18 @@ public class GameController :MonoBehaviour
 	public static bool RaceIsStarted { get { return true; } }
 	public static bool RaceIsEnded { get { return false; } }
 
-	CarController m_PlayerCar;
-	List<CarController> Cars = new List<CarController>();
-	int CurrentCarIndex = 0;
+	public CarController m_PlayerCar;
+	public List<CarController> Cars = new List<CarController>();
+	public int CurrentCarIndex = 0;
+
+	public void UpdateList()
+	{
+		Instance = this;
+		Cars.Clear();
+		//Find all cars in current game.
+		Cars.AddRange (GameObject.FindObjectsOfType<CarController> ());
+		Cars = Cars.OrderBy (c => c.name).ToList();
+	}
 
 	protected virtual void Awake ()
 	{
@@ -51,9 +60,10 @@ public class GameController :MonoBehaviour
 		m_PlayerCar = Cars[0];
 		m_PlayerCar.GetComponent<UserControl> ().enabled = true;
 		m_PlayerCar.GetComponent<AudioListener> ().enabled = true;
+		m_PlayerCar.GetComponent<CarRespawnController> ().enabled = true;
 
 		if (NextCarButton)
-        {
+        	{
 			NextCarButton.onClick.AddListener (NextCar);
 		}
 	}
@@ -71,11 +81,14 @@ public class GameController :MonoBehaviour
 	{
 		m_PlayerCar.GetComponent<UserControl> ().enabled = false;
 		m_PlayerCar.GetComponent<AudioListener> ().enabled = false;
+		m_PlayerCar.GetComponent<CarRespawnController> ().enabled = false;
 
 		CurrentCarIndex = MathExtentions.LoopClamp (CurrentCarIndex + 1, 0, Cars.Count);
 
 		m_PlayerCar = Cars[CurrentCarIndex];
 		m_PlayerCar.GetComponent<UserControl> ().enabled = true;
 		m_PlayerCar.GetComponent<AudioListener> ().enabled = true;
+		m_PlayerCar.GetComponent<CarRespawnController> ().enabled = true;
+		m_PlayerCar.GetComponent<CarController> ().enabled = true;
 	}
 }

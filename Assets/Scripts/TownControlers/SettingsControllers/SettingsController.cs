@@ -5,11 +5,14 @@ using UnityEngine.SceneManagement;
 using UnityEngine.Audio;
 using UnityEngine.UI;
 
+
 public class SettingsController : MonoBehaviour
 {
 	[SerializeField] private GameObject music;
+	[SerializeField] private CarController car;
 	[SerializeField] private GameObject controllers;
 	[SerializeField] private GameObject settings;
+	[SerializeField] private GameObject camera;
 	[SerializeField] KeyCode stopkey; 
 	[SerializeField] private bool showing = false;	
 	[SerializeField] private bool manual = true;	
@@ -21,18 +24,26 @@ public class SettingsController : MonoBehaviour
 	
     void Update()
     {
+		car = GetComponent<GameController>().Cars[GetComponent<GameController>().CurrentCarIndex];
 		if(Input.GetKeyDown (stopkey) && !showing)
 		{
+
+			car.GetComponent<CarController>().enabled = false;
 			ShowSettings();
 		}
 		else if(Input.GetKeyDown (stopkey) && showing)
 		{
+			car.GetComponent<CarController>().enabled = true;
 			CloseSettings();
 		}
     }
     
     public void ShowSettings()
     {
+    	car.GetComponent<CarController>().enabled = false;
+    	car.GetComponent<CarRespawnController> ().enabled = false;
+    	GetComponent<GameController> ().enabled = false;
+    	camera.GetComponent<CameraController> ().enabled = false;
     	settings.SetActive(true);
     	controllers.SetActive(show_controllers);
     	music.SetActive(show_controllers);
@@ -40,6 +51,10 @@ public class SettingsController : MonoBehaviour
     
     public void CloseSettings()
     {
+	camera.GetComponent<CameraController> ().enabled = true;
+    	car.GetComponent<CarController>().enabled = true;
+    	car.GetComponent<CarRespawnController> ().enabled = true;
+    	GetComponent<GameController> ().enabled = true;
     	settings.SetActive(false);
     	controllers.SetActive(show_controllers);
    	music.SetActive(show_controllers);

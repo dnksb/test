@@ -22,7 +22,7 @@ public class CameraController :Singleton<CameraController>
 
 	float SqrMinDistance;
 
-	[SerializeField] private GameObject player;
+	[SerializeField] private GameController controller;
 
 	//The target point is calculated from velocity of car.
 	Vector3 TargetPoint
@@ -35,7 +35,7 @@ public class CameraController :Singleton<CameraController>
 			}
 			Vector3 result = TargetCar.RB.velocity * ActivePreset.VelocityMultiplier;
 			result += TargetCar.transform.position;
-			result.y = player.transform.position.y;
+			result.y = TargetCar.transform.position.y;
 			return result;
 		}
 	}
