@@ -1,9 +1,10 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class ShowHideMobileUI : MonoBehaviour
 {
+    [SerializeField] GameObject MobileUI;
     [SerializeField] GameObject PcConcoleUI;
 
     public static bool IsMobilePlatform
@@ -22,6 +23,7 @@ public class ShowHideMobileUI : MonoBehaviour
 
     void Start()
     {
+        MobileUI.SetActive (IsMobilePlatform);
         PcConcoleUI.SetActive (!IsMobilePlatform);
     }
 }

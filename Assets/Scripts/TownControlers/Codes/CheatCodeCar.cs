@@ -12,6 +12,7 @@ public class CheatCodeCar : MonoBehaviour
     [SerializeField] private GameObject truck;
     [SerializeField] private GameObject truckTrailer;
     [SerializeField] private GameObject supertruck;
+    [SerializeField] private GameObject del;
     
     public void Interpretetor(GameObject textBox)
     {
@@ -31,6 +32,10 @@ public class CheatCodeCar : MonoBehaviour
     	else if(code == "insert trailer")
     	{
             InsertTrailer();
+    	}
+    	else if(code == "insert del")
+    	{
+            InsertDel();
     	}
     	else if(code == "1000")
     	{
@@ -55,6 +60,11 @@ public class CheatCodeCar : MonoBehaviour
     public void InsertTrailer()
     {
     	Instantiate(truckTrailer);
+    }
+    
+    public void InsertDel()
+    {
+    	Instantiate(del);
     }
     
     public void AddManey()

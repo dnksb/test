@@ -4,18 +4,8 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - chk
-  - PlayerCar
-  - AICarCollider
-  - play_car
   - Car
-  - Fire
-  - Race1
-  - Race2
-  - Race3
-  - Race4
-  - Race5
-  - bouling
+  - ResetDriftCollision
   layers:
   - Default
   - TransparentFX
@@ -26,11 +16,11 @@ TagManager:
   - 
   - 
   - Car
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Road
+  - BrakingGround
+  - Metal
+  - Rubber
+  - FinishZone
   - 
   - 
   - 
