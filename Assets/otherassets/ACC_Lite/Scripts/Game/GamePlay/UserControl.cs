@@ -11,9 +11,9 @@ public class UserControl :MonoBehaviour
 
 	CarController ControlledCar;
 
-	public float Horizontal { get; private set; }
-	public float Vertical { get; private set; }
-	public bool Brake { get; private set; }
+	public float Horizontal;
+	public float Vertical;
+	public bool Brake;
 
 	public static MobileControlUI CurrentUIControl { get; set; }
 

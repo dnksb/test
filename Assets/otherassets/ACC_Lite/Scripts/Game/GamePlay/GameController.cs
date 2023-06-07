@@ -26,6 +26,7 @@ public class GameController :MonoBehaviour
 		Cars.Clear();
 		//Find all cars in current game.
 		Cars.AddRange (GameObject.FindObjectsOfType<CarController> ());
+		Cars.RemoveAll(c => c.tag == "Bot");
 		Cars = Cars.OrderBy (c => c.name).ToList();
 	}
 
@@ -36,6 +37,7 @@ public class GameController :MonoBehaviour
 
 		//Find all cars in current game.
 		Cars.AddRange (GameObject.FindObjectsOfType<CarController> ());
+		Cars.RemoveAll(c => c.tag == "Bot");
 		Cars = Cars.OrderBy (c => c.name).ToList();
 
 		foreach (var car in Cars)
@@ -68,8 +70,8 @@ public class GameController :MonoBehaviour
 		}
 	}
 
-	void Update () 
-	{ 
+	void Update ()
+	{
 		if (Input.GetKeyDown (NextCarKey))
 		{
 			NextCar ();

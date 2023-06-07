@@ -21,8 +21,11 @@ public class CarController :MonoBehaviour
 
 	#region Properties of car parameters
 
-	float MaxMotorTorque;
-	float MaxSteerAngle { get { return CarConfig.MaxSteerAngle; } }
+	public float MaxMotorTorque;
+	public float MaxSteerAngle {
+		get { return CarConfig.MaxSteerAngle; }
+		set { CarConfig.MaxSteerAngle = value; }
+	}
 	public DriveType Drivetype { get { return CarConfig.DriveType; } set => CarConfig.DriveType = value; }
 	public bool AutomaticGearbox { get { return CarConfig.AutomaticGearBox; } set => CarConfig.AutomaticGearBox = value; }
 	AnimationCurve MotorTorqueFromRpmCurve { get { return CarConfig.MotorTorqueFromRpmCurve; } }
@@ -60,7 +63,7 @@ public class CarController :MonoBehaviour
 	#endregion //Properties of drif Settings
 
 	public CarConfig GetCarConfig { get { return CarConfig; } }
-	public Wheel[] Wheels { get; private set; }										//All wheels, public link.			
+	public Wheel[] Wheels { get; private set; }										//All wheels, public link.
 	public System.Action BackFireAction;                                            //Backfire invoked when cut off (You can add a invoke when changing gears).
 
 	float[] AllGearsRatio;															 //All gears (Reverce, neutral and all forward).
@@ -274,9 +277,9 @@ public class CarController :MonoBehaviour
 	public float GetMaxRPM { get { return MaxRPM; } }
 	public float GetMinRPM { get { return MinRPM; } }
 	public float GetInCutOffRPM { get { return CutOffRPM - CutOffOffsetRPM; } }
-	
-	[SerializeField] KeyCode UpGear; 
-	[SerializeField] KeyCode DownGear; 
+
+	[SerializeField] KeyCode UpGear;
+	[SerializeField] KeyCode DownGear;
 
 	float CutOffTimer;
 	bool InCutOff;
@@ -382,7 +385,7 @@ public class CarController :MonoBehaviour
 			}
 		}
 
-		//Automatic gearbox logic. 
+		//Automatic gearbox logic.
 		if (AutomaticGearbox)
 		{
 
@@ -414,7 +417,7 @@ public class CarController :MonoBehaviour
 
 			if (!Mathf.Approximately (prevRatio, 0) && !Mathf.Approximately (newRatio, 0))
 			{
-				EngineRPM = Mathf.Lerp (EngineRPM, EngineRPM * (newRatio / prevRatio), RpmEngineToRpmWheelsLerpSpeed * Time.fixedDeltaTime); //EngineRPM * (prevRatio / newRatio);// 
+				EngineRPM = Mathf.Lerp (EngineRPM, EngineRPM * (newRatio / prevRatio), RpmEngineToRpmWheelsLerpSpeed * Time.fixedDeltaTime); //EngineRPM * (prevRatio / newRatio);//
 			}
 
 			if (CarDirection <= 0 && CurrentAcceleration < 0)
@@ -454,7 +457,7 @@ public class CarController :MonoBehaviour
 			}
 			if (!Mathf.Approximately (prevRatio, 0) && !Mathf.Approximately (newRatio, 0))
 			{
-				EngineRPM = Mathf.Lerp (EngineRPM, EngineRPM * (newRatio / prevRatio), RpmEngineToRpmWheelsLerpSpeed * Time.fixedDeltaTime); //EngineRPM * (prevRatio / newRatio);// 
+				EngineRPM = Mathf.Lerp (EngineRPM, EngineRPM * (newRatio / prevRatio), RpmEngineToRpmWheelsLerpSpeed * Time.fixedDeltaTime); //EngineRPM * (prevRatio / newRatio);//
 			}
 		}
 
