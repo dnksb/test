@@ -5,7 +5,10 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
   - enabled: 1
-    path: Assets/otherassets/Racing Starter Kit/Scenes/SampleScene.unity
-    guid: adc28652a668a9646b0352d63f41b808
+    path: Assets/Scenes/Garage.unity
+    guid: e7133cb03a22269409a3994e60bf4165
   m_configObjects: {}

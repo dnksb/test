@@ -7,6 +7,10 @@ public class AIController : MonoBehaviour
 {
     CarController ControlledCar;
 
+	public int Counter = 100;
+
+	public double Last;
+
 	public float Horizontal;
 	public float Vertical;
 	public float MaxSpeed;
@@ -31,6 +35,13 @@ public class AIController : MonoBehaviour
 
 	private void Awake ()
 	{
+		Last = Math.Floor((COM.transform.position - CheckPoint[CurrentCheckPoint].position).magnitude);
+		ControlledCar = GetComponent<CarController> ();
+	}
+
+	public void StartRace()
+	{
+		Last = Math.Floor((COM.transform.position - CheckPoint[CurrentCheckPoint].position).magnitude);
 		ControlledCar = GetComponent<CarController> ();
 	}
 
@@ -49,17 +60,17 @@ public class AIController : MonoBehaviour
 			Horizontal = Horizontal;
 		else if(left.IsTouch)
 		{
-			if(Horizontal != 0) Horizontal *= -0.5f;
-			else if(Vertical > 0) Horizontal = 0.5f;
-			else Horizontal = -0.5f;
-			Vertical *= 0.5f;
+			if(Horizontal != 0) Horizontal *= -0.8f;
+			else if(Vertical > 0) Horizontal = 0.8f;
+			else Horizontal = -0.8f;
+			Vertical *= 0.8f;
 		}
 		else if(right.IsTouch)
 		{
-			if(Horizontal != 0) Horizontal *= -0.5f;
-			else if(Vertical > 0) Horizontal = -0.5f;
-			else Horizontal = 0.5f;
-			Vertical *= 0.5f;
+			if(Horizontal != 0) Horizontal *= -0.8f;
+			else if(Vertical > 0) Horizontal = -0.8f;
+			else Horizontal = 0.8f;
+			Vertical *= 0.8f;
 		}
 		else
 			Horizontal = Horizontal;
@@ -117,7 +128,14 @@ public class AIController : MonoBehaviour
 
 	void Update ()
 	{
-
+		Counter -= 1;
+		if(Counter == 0)
+		{
+			if (Last == Math.Floor((COM.transform.position - CheckPoint[CurrentCheckPoint].position).magnitude))
+				transform.position = CheckPoint[CurrentCheckPoint].position;
+			Last = Math.Floor((COM.transform.position - CheckPoint[CurrentCheckPoint].position).magnitude);
+			Counter = 100;
+		}
 		if ((COM.transform.position - CheckPoint[CurrentCheckPoint].position).magnitude < 5)
 			CurrentCheckPoint = MathExtentions.LoopClamp (CurrentCheckPoint + 1, 0, CheckPoint.Count);
 		Vertical = MaxSpeed;

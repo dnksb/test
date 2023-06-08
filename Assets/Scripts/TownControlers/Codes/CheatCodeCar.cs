@@ -13,7 +13,9 @@ public class CheatCodeCar : MonoBehaviour
     [SerializeField] private GameObject truckTrailer;
     [SerializeField] private GameObject supertruck;
     [SerializeField] private GameObject del;
-    
+    [SerializeField] private GameObject tank;
+    [SerializeField] private GameObject gaz;
+
     public void Interpretetor(GameObject textBox)
     {
     	string code = textBox.GetComponent<Text>().text;
@@ -37,17 +39,26 @@ public class CheatCodeCar : MonoBehaviour
     	{
             InsertDel();
     	}
+        else if(code == "insert tank")
+    	{
+            InsertTank();
+    	}
+        else if(code == "insert gaz")
+    	{
+            InsertGaz();
+    	}
     	else if(code == "1000")
     	{
             AddManey();
     	}
+
     }
-    
+
     public void InsertCar()
     {
     	Instantiate(car);
     }
-    
+
     public void InsertTruck()
     {
     	Instantiate(truck);
@@ -56,24 +67,34 @@ public class CheatCodeCar : MonoBehaviour
     {
     	Instantiate(supertruck);
     }
-    
+
     public void InsertTrailer()
     {
     	Instantiate(truckTrailer);
     }
-    
+
     public void InsertDel()
     {
     	Instantiate(del);
     }
-    
+
+    public void InsertTank()
+    {
+    	Instantiate(tank);
+    }
+
+    public void InsertGaz()
+    {
+    	Instantiate(gaz);
+    }
+
     public void AddManey()
     {
     	DataTable scoreboard;
         scoreboard = DataBase.GetTable($"SELECT level FROM players WHERE nickname = '{ChoiceCarMenu.Nickname}'");
-        
+
         int maney = 0;
-        
+
         foreach (DataRow row in scoreboard.Rows)
         {
             var cells = row.ItemArray;

@@ -13,15 +13,15 @@ public class SettingsController : MonoBehaviour
 	[SerializeField] private GameObject controllers;
 	[SerializeField] private GameObject settings;
 	[SerializeField] private GameObject camera;
-	[SerializeField] KeyCode stopkey; 
-	[SerializeField] private bool showing = false;	
-	[SerializeField] private bool manual = true;	
-	[SerializeField] private bool show_controllers = false;	
+	[SerializeField] KeyCode stopkey;
+	[SerializeField] private bool showing = false;
+	[SerializeField] private bool manual = true;
+	[SerializeField] private bool show_controllers = false;
 	[SerializeField] private AudioMixer am;
 	[SerializeField] private Scrollbar scrol_bar;
 	[SerializeField] private CarController wheels;
-	
-	
+
+
     void Update()
     {
 		car = GetComponent<GameController>().Cars[GetComponent<GameController>().CurrentCarIndex];
@@ -37,7 +37,7 @@ public class SettingsController : MonoBehaviour
 			CloseSettings();
 		}
     }
-    
+
     public void ShowSettings()
     {
     	car.GetComponent<CarController>().enabled = false;
@@ -48,35 +48,35 @@ public class SettingsController : MonoBehaviour
     	controllers.SetActive(show_controllers);
     	music.SetActive(show_controllers);
     }
-    
+
     public void CloseSettings()
     {
-	camera.GetComponent<CameraController> ().enabled = true;
+		camera.GetComponent<CameraController> ().enabled = true;
     	car.GetComponent<CarController>().enabled = true;
     	car.GetComponent<CarRespawnController> ().enabled = true;
     	GetComponent<GameController> ().enabled = true;
     	settings.SetActive(false);
     	controllers.SetActive(show_controllers);
-   	music.SetActive(show_controllers);
+   		music.SetActive(show_controllers);
     }
-    
+
     public void ShowControllers()
     {
 	show_controllers = !show_controllers;
     }
-    
+
     public void AudioVolume()
     {
         float sliderValue = (-80) + scrol_bar.value * 100;
         am.SetFloat("masterVolume", sliderValue);
     }
-    
+
     public void GearBoxMode()
     {
     	manual = !manual;
     	wheels.AutomaticGearbox = manual;
     }
-    
+
     public void BackMenu()
     {
         SceneManager.LoadScene("Main_Menu");

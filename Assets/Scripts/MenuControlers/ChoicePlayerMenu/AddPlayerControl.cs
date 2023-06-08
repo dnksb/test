@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Data;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+using System.Data;
+using System;
 
 public class AddPlayerControl : MonoBehaviour
 {
@@ -12,6 +14,9 @@ public class AddPlayerControl : MonoBehaviour
 
     [SerializeField] private GameObject error_text;
     [SerializeField] private GameObject textBox;
+
+    [SerializeField] string car_uid;
+    [SerializeField] string car_name;
 
     private bool HaveNicknameInBD(string nickname)
     {
@@ -43,6 +48,13 @@ public class AddPlayerControl : MonoBehaviour
         else
         {
             DataBase.ExecuteQueryWithoutAnswer($"INSERT INTO players (nickname, level) VALUES ('{nickname}',{500})");
+
+            Guid myuuid = Guid.NewGuid();
+            car_uid = myuuid.ToString();
+            car_name = "Crown 1985";
+            DataBase.ExecuteQueryWithoutAnswer($"INSERT INTO '{nickname}' (id_car, car, car_power) VALUES ('{car_uid}', '{car_name}', 280)");
+	    	DataBase.ExecuteQueryWithoutAnswer($"INSERT INTO 'all cars set' VALUES ('{car_uid}', 'stock_crown_front_fender', 'stock_crown_back_fender', 'stock_crown_front_bumper', 'stock_crown_back_bumper', 'stock_crown_threshold')");
+	     	DataBase.ExecuteQueryWithoutAnswer($"INSERT INTO 'car tech set' VALUES ('{car_uid}', '2', '2', '2', '2')");
         }
     }
 
