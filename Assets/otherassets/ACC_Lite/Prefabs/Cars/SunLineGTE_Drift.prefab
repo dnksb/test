@@ -5286,6 +5286,7 @@ MonoBehaviour:
     MaxAngularVelocityHelpAngle: 90
     AngularVelucityInMaxAngle: 0.5
     AngularVelucityInMinAngle: 2
+  MaxMotorTorque: 0
   UpGear: 0
   DownGear: 0
 --- !u!114 &114274180005872914
@@ -5336,6 +5337,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aeb67c03a9a7bb745b02d885278296b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Horizontal: 0
+  Vertical: 0
+  Brake: 0
 --- !u!81 &81554163586931898
 AudioListener:
   m_ObjectHideFlags: 0
@@ -5358,6 +5362,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SetCameraKey: 114
   car: {fileID: 0}
+  COM: {fileID: 4113215784759456}
+  RaceMode: 0
+  CheckPoint: []
+  CurrentCheckPoint: 0
 --- !u!1 &1374432113194866
 GameObject:
   m_ObjectHideFlags: 0

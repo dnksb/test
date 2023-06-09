@@ -69,7 +69,7 @@ public class SettingsCar : MonoBehaviour
         front_car_front_slide = car_front_slide;
         front_car_side_slide = 4.0f - front_car_front_slide;
     }
-    
+
     public void SetForRace()
     {
         front_car_front_slide = 2.5f;
@@ -78,7 +78,7 @@ public class SettingsCar : MonoBehaviour
         back_car_front_slide = 2.5f;
         back_car_side_slide = 0.7f;
     }
-    
+
     public void SetForDrift()
     {
         front_car_front_slide = 2.22f;
@@ -112,16 +112,16 @@ public class SettingsCar : MonoBehaviour
     {
     	DataTable scoreboard;
         scoreboard = DataBase.GetTable($"SELECT level FROM players WHERE nickname = '{ChoiceCarMenu.Nickname}'");
-        
+
         int maney = 0;
-        
+
         foreach (DataRow row in scoreboard.Rows)
         {
             var cells = row.ItemArray;
 
 	    maney = int.Parse(cells[0].ToString());
         }
-        
+
         if(maney < price)
         {
         	return false;
@@ -134,7 +134,7 @@ public class SettingsCar : MonoBehaviour
     {
     	if(CheckPrice(10))
    	{
-        DataBase.ExecuteQueryWithoutAnswer($"UPDATE 'car tech set' SET front_front =  '{front_car_front_slide}', front_side = '{front_car_side_slide}', back_front = '{back_car_front_slide}', back_side = '{back_car_side_slide}' WHERE car_id = '{id_car_text}'");
+        DataBase.ExecuteQueryWithoutAnswer($"UPDATE 'car tech set' SET front_front =  '{front_car_front_slide}', front_side = '{front_car_side_slide}', back_front = '{back_car_front_slide}', back_side = '{back_car_side_slide}' WHERE id_car = '{id_car_text}'");
         }
     }
 

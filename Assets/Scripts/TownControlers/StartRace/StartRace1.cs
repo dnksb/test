@@ -10,15 +10,29 @@ public class StartRace1 : MonoBehaviour
 {
     public GameObject Race;
     public GameObject Bet;
+
     public GameObject StartPlace;
     public GameObject StartButton;
     public GameController Controller;
+
     public GameObject WinMessage;
     public GameObject LoseMessage;
+
+    public int AmountLaps;
+    public int CurrentAmountLaps = 1;
     public int PriceOfWin;
+
+    public Vector3 StartPosition;
+    public Quaternion StartRotation;
+
     [SerializeField] private GameObject camera;
     public List<AIController> Cars = new List<AIController>();
     [SerializeField] private CarController car;
+
+    public void Start()
+    {
+        Race.SetActive(false);
+    }
 
     public void ShowBet()
     {
@@ -36,26 +50,43 @@ public class StartRace1 : MonoBehaviour
 
     public void StartRace()
     {
+        CurrentAmountLaps = 0;
         LoseMessage.SetActive(false);
         camera.GetComponent<CameraController> ().enabled = true;
-
         car.GetComponent<CarController>().enabled = true;
         car.GetComponent<CarRespawnController> ().enabled = true;
-        car.transform.position = new Vector3(-259.24f, 7.61f, 236.3913f);
-        car.transform.rotation = Quaternion.Euler(0, 90, 0);
+        car.transform.position = StartPosition;
+        car.transform.rotation = StartRotation;
 
         Bet.SetActive(false);
+        foreach (var carbot in Cars)
+        {
+            carbot.StartRace();
+            carbot.SetActive(true);
+            carbot.CurrentCheckPoint = 0;
+        }
         Race.SetActive(true);
+        car.GetComponent<CarRespawnController> ().StartRace(Cars[0].CheckPoint);
 
-        foreach (var car in Cars)
-            car.SetActive(true);
     }
 
     void OnTriggerEnter(Collider other) {
+
         if(other.tag == "Car")
-            Win();
+            if(car.GetComponent<CarRespawnController>().CurrentCheckPoint >= (car.GetComponent<CarRespawnController>().CheckPoint.Count - 1))
+            {
+                if(AmountLaps <= car.GetComponent<CarRespawnController>().CurrentAmountLaps)
+                    Win();
+                else car.GetComponent<CarRespawnController>().CurrentAmountLaps += 1;
+            }
         else if(other.tag == "Bot")
-            Lose();
+            if(car.GetComponent<AIController>().CurrentCheckPoint >= (car.GetComponent<AIController>().CheckPoint.Count - 1))
+            {
+
+                if(AmountLaps <= car.GetComponent<AIController>().CurrentAmountLaps)
+                    Lose();
+                else car.GetComponent<AIController>().CurrentAmountLaps += 1;
+            }
     }
 
     public void Win()
@@ -64,8 +95,10 @@ public class StartRace1 : MonoBehaviour
         WinMessage.SetActive(true);
         StartPlace.SetActive(true);
         Race.SetActive(false);
-        foreach (var car in Cars)
-            car.SetActive(false);
+        foreach (var carbot in Cars)
+            carbot.SetActive(false);
+
+        car.GetComponent<CarRespawnController> ().RaceMode = false;
 
         car.GetComponent<CarController>().enabled = false;
         car.GetComponent<CarRespawnController> ().enabled = false;
@@ -100,17 +133,18 @@ public class StartRace1 : MonoBehaviour
         car.GetComponent<CarController>().enabled = true;
         car.GetComponent<CarRespawnController> ().enabled = true;
         camera.GetComponent<CameraController> ().enabled = true;
+        StartPlace.SetActive(true);
     }
 
     public void Lose()
     {
         car.UpdateControls(0,0,true);
         LoseMessage.SetActive(true);
-        StartPlace.SetActive(true);
         Race.SetActive(false);
+        car.GetComponent<CarRespawnController> ().RaceMode = false;
 
-        foreach (var car in Cars)
-            car.SetActive(false);
+        foreach (var carbot in Cars)
+            carbot.SetActive(false);
         car.GetComponent<CarController>().enabled = false;
         car.GetComponent<CarRespawnController> ().enabled = false;
         camera.GetComponent<CameraController> ().enabled = false;

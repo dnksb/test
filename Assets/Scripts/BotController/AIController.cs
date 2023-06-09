@@ -33,14 +33,29 @@ public class AIController : MonoBehaviour
 	public List<Transform> CheckPoint = new List<Transform>();
 	public int CurrentCheckPoint = 0;
 
+	public Vector3 StartPosition;
+	public Quaternion StartRotation;
+
+	public int CurrentAmountLaps;
+
+	public void Start()
+	{
+		StartPosition = COM.transform.position;
+		StartRotation = transform.rotation;
+	}
 	private void Awake ()
 	{
 		Last = Math.Floor((COM.transform.position - CheckPoint[CurrentCheckPoint].position).magnitude);
 		ControlledCar = GetComponent<CarController> ();
+		StartPosition = COM.transform.position;
+		StartRotation = transform.rotation;
 	}
 
 	public void StartRace()
 	{
+		transform.position = StartPosition;
+		transform.rotation = StartRotation;
+		CurrentAmountLaps = 0;
 		Last = Math.Floor((COM.transform.position - CheckPoint[CurrentCheckPoint].position).magnitude);
 		ControlledCar = GetComponent<CarController> ();
 	}
@@ -136,6 +151,8 @@ public class AIController : MonoBehaviour
 			Last = Math.Floor((COM.transform.position - CheckPoint[CurrentCheckPoint].position).magnitude);
 			Counter = 100;
 		}
+		if((COM.transform.position - CheckPoint[CurrentCheckPoint].position).magnitude > 150)
+			transform.position = CheckPoint[CurrentCheckPoint].position;
 		if ((COM.transform.position - CheckPoint[CurrentCheckPoint].position).magnitude < 5)
 			CurrentCheckPoint = MathExtentions.LoopClamp (CurrentCheckPoint + 1, 0, CheckPoint.Count);
 		Vertical = MaxSpeed;
