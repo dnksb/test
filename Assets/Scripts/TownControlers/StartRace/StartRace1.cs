@@ -73,19 +73,29 @@ public class StartRace1 : MonoBehaviour
     void OnTriggerEnter(Collider other) {
 
         if(other.tag == "Car")
-            if(car.GetComponent<CarRespawnController>().CurrentCheckPoint >= (car.GetComponent<CarRespawnController>().CheckPoint.Count - 1))
+            if(car.GetComponent<CarRespawnController>().CurrentCheckPoint >= (
+                car.GetComponent<CarRespawnController>().CheckPoint.Count - 1))
             {
                 if(AmountLaps <= car.GetComponent<CarRespawnController>().CurrentAmountLaps)
                     Win();
                 else car.GetComponent<CarRespawnController>().CurrentAmountLaps += 1;
             }
         else if(other.tag == "Bot")
-            if(car.GetComponent<AIController>().CurrentCheckPoint >= (car.GetComponent<AIController>().CheckPoint.Count - 1))
+            Debug.Log((other.GetComponent<AIController>().CheckPoint.Count - 1));
+            if(other.GetComponent<AIController>().CurrentCheckPoint >= (
+                other.GetComponent<AIController>().CheckPoint.Count - 1))
             {
-
-                if(AmountLaps <= car.GetComponent<AIController>().CurrentAmountLaps)
+                Debug.Log(other.GetComponent<AIController>().CurrentAmountLaps);
+                if(AmountLaps <= other.GetComponent<AIController>().CurrentAmountLaps)
                     Lose();
-                else car.GetComponent<AIController>().CurrentAmountLaps += 1;
+                else
+                {
+                    other.GetComponent<AIController>().CurrentAmountLaps += 1;
+                    other.GetComponent<AIController>().CurrentCheckPoint = MathExtentions.LoopClamp (
+                        other.GetComponent<AIController>().CurrentCheckPoint + 1,
+                        0,
+                        other.GetComponent<AIController>().CheckPoint.Count);
+                }
             }
     }
 
@@ -115,7 +125,8 @@ public class StartRace1 : MonoBehaviour
 
 	        maney = int.Parse(cells[0].ToString());
         }
-    	var tmp1 = DataBase.ExecuteQueryWithAnswer($"UPDATE players SET level = {maney + PriceOfWin} WHERE nickname = '{ChoiceCarMenu.Nickname}'");
+    	var tmp1 = DataBase.ExecuteQueryWithAnswer(
+            $"UPDATE players SET level = {maney + PriceOfWin} WHERE nickname = '{ChoiceCarMenu.Nickname}'");
 
     }
 
@@ -150,3 +161,48 @@ public class StartRace1 : MonoBehaviour
         camera.GetComponent<CameraController> ().enabled = false;
     }
 }
+
+
+/*
+using UnityEngine;
+
+public class LoadingScreen : MonoBehaviour
+{
+    public Texture2D screenTexture;
+    private static LoadingScreen instance;
+    private static AsyncOperation syncLevel;
+    private static bool doneLoadingScene;
+
+    void Awake()
+    {
+        if (instance)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        instance = this;
+        gameObject.AddComponent<GUITexture>().enabled = false;
+        guiTexture.texture = screenTexture;
+        transform.position = new Vector3(0.5f, 0.5f, 0.0f);
+        DontDestroyOnLoad(this);
+    }
+
+    public static void Load(string name)
+    {
+        if (!instance) return;
+        instance.guiTexture.enabled = true;
+        syncLevel = Application.LoadLevelAsync(name);
+        doneLoadingScene = true;
+    }
+
+    public void Update()
+    {
+        if (doneLoadingScene && syncLevel.isDone)
+        {
+            doneLoadingScene = false;
+            instance.guiTexture.enabled = false;
+        }
+    }
+}
+
+*/

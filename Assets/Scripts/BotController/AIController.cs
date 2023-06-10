@@ -153,7 +153,8 @@ public class AIController : MonoBehaviour
 		}
 		if((COM.transform.position - CheckPoint[CurrentCheckPoint].position).magnitude > 150)
 			transform.position = CheckPoint[CurrentCheckPoint].position;
-		if ((COM.transform.position - CheckPoint[CurrentCheckPoint].position).magnitude < 5)
+		if ((COM.transform.position - CheckPoint[CurrentCheckPoint].position).magnitude < 5 &&
+			CurrentCheckPoint < CheckPoint.Count - 1)
 			CurrentCheckPoint = MathExtentions.LoopClamp (CurrentCheckPoint + 1, 0, CheckPoint.Count);
 		Vertical = MaxSpeed;
 		CheckCheckPoints();

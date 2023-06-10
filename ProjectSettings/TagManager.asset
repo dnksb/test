@@ -11,6 +11,14 @@ TagManager:
   - Bot
   - CheckPoint
   - Camera
+  - play_car
+  - Race3
+  - Race1
+  - bouling
+  - Race2
+  - Race5
+  - Race4
+  - loading
   layers:
   - Default
   - TransparentFX

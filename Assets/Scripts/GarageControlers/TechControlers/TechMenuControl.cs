@@ -1,6 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Data;
+using System;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.Video;
 using UnityEngine.SceneManagement;
 
 public class TechMenuControl : MonoBehaviour
@@ -9,6 +13,9 @@ public class TechMenuControl : MonoBehaviour
     [SerializeField] private GameObject Menu;
     [SerializeField] private GameObject Visual_Settings;
     [SerializeField] private GameObject Tech_Settings;
+    [SerializeField] private GameObject Loading;
+    [SerializeField] private GameObject Camera;
+    [SerializeField] private VideoPlayer Video;
 
     [SerializeField] private GameObject selected_car;
     [SerializeField] private List<GameObject> hidest_obj;
@@ -42,22 +49,29 @@ public class TechMenuControl : MonoBehaviour
 
     // Assign your GameObject you want to move Scene in the Inspector
     public GameObject m_MyGameObject;
+    private static AsyncOperation syncLevel;
+    public void StartVideo()
+    {
+        Loading.SetActive(true);
+        Video.Play();
+        foreach(GameObject elem in hidest_obj)
+        {
+        elem.SetActive(false);
+        }
+        m_MyGameObject.SetActive(false);
+    }
 
     public void StartGame()
     {
-    	foreach(GameObject elem in hidest_obj)
-    	{
-           elem.SetActive(false);
-    	}
-        m_MyGameObject.SetActive(false);
-
-        //Scene currentScene = SceneManager.GetActiveScene();
-
-        SceneManager.LoadSceneAsync(m_Scene, LoadSceneMode.Additive);
-
-        //SceneManager.MoveGameObjectToScene(m_MyGameObject, SceneManager.GetSceneByName(m_Scene));
-
-        //SceneManager.UnloadSceneAsync(currentScene);
+        syncLevel = SceneManager.LoadSceneAsync(m_Scene, LoadSceneMode.Additive);
     }
 
+    public void Update()
+    {
+        if(syncLevel.isDone)
+        {
+            Loading.SetActive(false);
+            Camera.SetActive(false);
+        }
+    }
 }

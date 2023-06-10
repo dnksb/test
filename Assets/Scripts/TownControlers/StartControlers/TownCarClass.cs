@@ -13,9 +13,11 @@ public class TownCarClass : MonoBehaviour
     [SerializeField] private CarController wheels;
 
     public GameObject[] show_cars;
+    public GameObject[] Loading;
     void Start()
     {
-
+        Loading = GameObject.FindGameObjectsWithTag("loading");
+        Loading[0].SetActive(false);
         show_cars = GameObject.FindGameObjectsWithTag("play_car");
         /*Debug.Log("--------------");*/
         town_car.choiced_car = Instantiate(
