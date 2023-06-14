@@ -132,7 +132,7 @@ public class SettingsCar : MonoBehaviour
 
     public void SaveToDB()
     {
-    	if(CheckPrice(10))
+    	if(CheckPrice(50))
    	{
         DataBase.ExecuteQueryWithoutAnswer($"UPDATE 'car tech set' SET front_front =  '{front_car_front_slide}', front_side = '{front_car_side_slide}', back_front = '{back_car_front_slide}', back_side = '{back_car_side_slide}' WHERE id_car = '{id_car_text}'");
         }

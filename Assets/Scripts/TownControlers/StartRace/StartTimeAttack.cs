@@ -75,7 +75,7 @@ public class StartTimeAttack : MonoBehaviour
     public void Update()
     {
         var ts = DateTime.Now - StartTime;
-        musicName.GetComponent<Text>().text = ts.TotalSeconds.ToString();
+        musicName.GetComponent<Text>().text = ts.TotalSeconds.ToString() + "s/" + TimeToWin.ToString() + "s";
         if(ts.TotalSeconds > TimeToWin)
             Lose();
     }

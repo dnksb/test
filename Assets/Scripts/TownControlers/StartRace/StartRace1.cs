@@ -81,11 +81,9 @@ public class StartRace1 : MonoBehaviour
                 else car.GetComponent<CarRespawnController>().CurrentAmountLaps += 1;
             }
         else if(other.tag == "Bot")
-            Debug.Log((other.GetComponent<AIController>().CheckPoint.Count - 1));
             if(other.GetComponent<AIController>().CurrentCheckPoint >= (
                 other.GetComponent<AIController>().CheckPoint.Count - 1))
             {
-                Debug.Log(other.GetComponent<AIController>().CurrentAmountLaps);
                 if(AmountLaps <= other.GetComponent<AIController>().CurrentAmountLaps)
                     Lose();
                 else

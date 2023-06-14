@@ -27,7 +27,7 @@ public class ChoiceCarMenu : MonoBehaviour
     [SerializeField] private List<Material> materials_for_wolga;
 
     [SerializeField] private Dropdown choice_color;
-    
+
     [SerializeField] int material_id;
 
     public static string Nickname
@@ -84,7 +84,7 @@ public class ChoiceCarMenu : MonoBehaviour
     {
         SceneManager.LoadScene("Main_Menu");
     }
-    
+
     public void OpenShop()
     {
         SceneManager.LoadScene("Shop");
@@ -111,6 +111,36 @@ public class ChoiceCarMenu : MonoBehaviour
                 //PlayerController.SetCar(selected_car);
 
             }
+        }
+    }
+
+    public bool CheckPrice(int price)
+    {
+    	DataTable scoreboard;
+        scoreboard = DataBase.GetTable($"SELECT level FROM players WHERE nickname = '{ChoiceCarMenu.Nickname}'");
+
+        int maney = 0;
+
+        foreach (DataRow row in scoreboard.Rows)
+        {
+            var cells = row.ItemArray;
+
+	    maney = int.Parse(cells[0].ToString());
+        }
+
+        if(maney < price)
+        {
+        	return false;
+        }
+        var tmp1 = DataBase.ExecuteQueryWithAnswer($"UPDATE players SET level = {maney - price} WHERE nickname = '{ChoiceCarMenu.Nickname}'");
+    	return true;
+    }
+
+    public void SaveToDB()
+    {
+    	if(CheckPrice(50))
+   	    {
+            Updatecar();
         }
     }
 

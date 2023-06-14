@@ -16,9 +16,27 @@ public class TechMenuControl : MonoBehaviour
     [SerializeField] private GameObject Loading;
     [SerializeField] private GameObject Camera;
     [SerializeField] private VideoPlayer Video;
+    public Transform ManeyText;
+    private static string nickname;
 
     [SerializeField] private GameObject selected_car;
     [SerializeField] private List<GameObject> hidest_obj;
+
+    public void GetManey()
+    {
+        DataTable scoreboard;
+        scoreboard = DataBase.GetTable($"SELECT level FROM players WHERE nickname = '{nickname}'");
+
+        int maney = 0;
+
+        foreach (DataRow row in scoreboard.Rows)
+        {
+            var cells = row.ItemArray;
+
+	        maney = int.Parse(cells[0].ToString());
+        }
+        ManeyText.GetComponent<Text>().text = maney.ToString();
+    }
 
     public void ShowVusialSettings()
     {
@@ -46,6 +64,8 @@ public class TechMenuControl : MonoBehaviour
 
     public void Start()
     {
+        nickname = ChoiceUserControler.GetPlayerNickname();
+        GetManey();
         Loading.SetActive(false);
         Camera.SetActive(true);
     }
