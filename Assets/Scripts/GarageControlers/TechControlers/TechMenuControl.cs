@@ -44,6 +44,12 @@ public class TechMenuControl : MonoBehaviour
         Tech_Settings.SetActive(false);
     }
 
+    public void Start()
+    {
+        Loading.SetActive(false);
+        Camera.SetActive(true);
+    }
+
     // Type in the name of the Scene you would like to load in the Inspector
     public string m_Scene;
 
@@ -55,9 +61,7 @@ public class TechMenuControl : MonoBehaviour
         Loading.SetActive(true);
         Video.Play();
         foreach(GameObject elem in hidest_obj)
-        {
-        elem.SetActive(false);
-        }
+            elem.SetActive(false);
         m_MyGameObject.SetActive(false);
     }
 

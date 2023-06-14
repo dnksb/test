@@ -38,6 +38,9 @@ public class AIController : MonoBehaviour
 
 	public int CurrentAmountLaps;
 
+	public DateTime StartTime;
+	public int TimeRespawn;
+
 	public void Start()
 	{
 		StartPosition = COM.transform.position;
@@ -58,6 +61,7 @@ public class AIController : MonoBehaviour
 		CurrentAmountLaps = 0;
 		Last = Math.Floor((COM.transform.position - CheckPoint[CurrentCheckPoint].position).magnitude);
 		ControlledCar = GetComponent<CarController> ();
+		StartTime = DateTime.Now;
 	}
 
 	void CheckBorders()
@@ -143,23 +147,41 @@ public class AIController : MonoBehaviour
 
 	void Update ()
 	{
-		Counter -= 1;
-		if(Counter == 0)
+		var ts = DateTime.Now - StartTime;
+
+		if(ts.TotalSeconds >= TimeRespawn)
 		{
 			if (Last == Math.Floor((COM.transform.position - CheckPoint[CurrentCheckPoint].position).magnitude))
-				transform.position = CheckPoint[CurrentCheckPoint].position;
+				{
+					if(CurrentCheckPoint != 0)
+						transform.position = CheckPoint[CurrentCheckPoint - 1].position;
+					else
+						transform.position = CheckPoint[CheckPoint.Count - 1].position;
+
+				}
 			Last = Math.Floor((COM.transform.position - CheckPoint[CurrentCheckPoint].position).magnitude);
-			Counter = 100;
+			StartTime = DateTime.Now;
 		}
-		if((COM.transform.position - CheckPoint[CurrentCheckPoint].position).magnitude > 150)
-			transform.position = CheckPoint[CurrentCheckPoint].position;
+
+		/*if((COM.transform.position - CheckPoint[CurrentCheckPoint].position).magnitude > 200)
+			{
+				if(CurrentCheckPoint != 0)
+					transform.position = CheckPoint[CurrentCheckPoint - 1].position;
+				else
+					transform.position = CheckPoint[CheckPoint.Count - 1].position;
+			}*/
+
 		if ((COM.transform.position - CheckPoint[CurrentCheckPoint].position).magnitude < 5 &&
 			CurrentCheckPoint < CheckPoint.Count - 1)
 			CurrentCheckPoint = MathExtentions.LoopClamp (CurrentCheckPoint + 1, 0, CheckPoint.Count);
+
 		Vertical = MaxSpeed;
 		CheckCheckPoints();
+
 		if (!trafic) CheckBorders();
+
 		if ((COM.transform.position - CheckPoint[CurrentCheckPoint].position).magnitude < 30) Vertical *= BrakeCof;
+
 		ControlledCar.UpdateControls (Horizontal, Vertical, false);
 	}
 }

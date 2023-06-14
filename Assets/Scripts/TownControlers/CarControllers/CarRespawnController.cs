@@ -28,6 +28,7 @@ public class CarRespawnController : MonoBehaviour
         CheckPoint = list;
         CurrentCheckPoint = 0;
         CurrentAmountLaps = 0;
+        
     }
 
 
@@ -43,12 +44,20 @@ public class CarRespawnController : MonoBehaviour
             }
             else
             {
-                transform.position = CheckPoint[CurrentCheckPoint].position;
+                if(CurrentCheckPoint != 0)
+                    transform.position = CheckPoint[CurrentCheckPoint - 1].position;
+                else
+                    transform.position = CheckPoint[CheckPoint.Count - 1].position;
             }
 	    }
-        if((COM.transform.position - CheckPoint[CurrentCheckPoint].position).magnitude > 150 && RaceMode)
-			transform.position = CheckPoint[CurrentCheckPoint].position;
-        if ((COM.transform.position - CheckPoint[CurrentCheckPoint].position).magnitude < 5 && RaceMode)
+        if((COM.transform.position - CheckPoint[CurrentCheckPoint].position).magnitude > 100 && RaceMode)
+        {
+            if(CurrentCheckPoint != 0)
+                transform.position = CheckPoint[CurrentCheckPoint - 1].position;
+            else
+                transform.position = CheckPoint[CheckPoint.Count - 1].position;
+        }
+        if ((COM.transform.position - CheckPoint[CurrentCheckPoint].position).magnitude < 8 && RaceMode)
 			CurrentCheckPoint = MathExtentions.LoopClamp (CurrentCheckPoint + 1, 0, CheckPoint.Count);
     }
 
