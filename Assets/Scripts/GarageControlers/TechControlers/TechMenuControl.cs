@@ -15,6 +15,7 @@ public class TechMenuControl : MonoBehaviour
     [SerializeField] private GameObject Tech_Settings;
     [SerializeField] private GameObject Loading;
     [SerializeField] private GameObject Camera;
+    [SerializeField] private GameObject error;
     [SerializeField] private VideoPlayer Video;
     public Transform ManeyText;
     private static string nickname;
@@ -48,6 +49,7 @@ public class TechMenuControl : MonoBehaviour
     {
         Menu.SetActive(true);
         Visual_Settings.SetActive(false);
+        error.SetActive(false);
     }
 
     public void ShowTechSettings()
@@ -60,9 +62,10 @@ public class TechMenuControl : MonoBehaviour
     {
         Menu.SetActive(true);
         Tech_Settings.SetActive(false);
+        error.SetActive(false);
     }
 
-    public void Start()
+    public void Awake()
     {
         nickname = ChoiceUserControler.GetPlayerNickname();
         GetManey();

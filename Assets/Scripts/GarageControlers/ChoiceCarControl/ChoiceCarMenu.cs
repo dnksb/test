@@ -13,6 +13,7 @@ public class ChoiceCarMenu : MonoBehaviour
 
     [SerializeField] private GameObject car;
     [SerializeField] private GameObject content;
+    [SerializeField] private GameObject error;
     [SerializeField] private List<GameObject> clones;
 
     static public string id_car_text;
@@ -141,6 +142,10 @@ public class ChoiceCarMenu : MonoBehaviour
     	if(CheckPrice(50))
    	    {
             Updatecar();
+        }
+        else
+        {
+            error.SetActive(true);
         }
     }
 

@@ -21,6 +21,8 @@ public class SettingsCar : MonoBehaviour
     [SerializeField] private Scrollbar scrol_bar_side;
     [SerializeField] private Scrollbar scrol_bar_front;
 
+    [SerializeField] private GameObject error;
+
     public string id_car_text;
 
     public void Start()
@@ -72,11 +74,11 @@ public class SettingsCar : MonoBehaviour
 
     public void SetForRace()
     {
-        front_car_front_slide = 2.5f;
-        front_car_side_slide = 0.7f;
+        front_car_front_slide = 0.3f;
+        front_car_side_slide = 0.6f;
 
-        back_car_front_slide = 2.5f;
-        back_car_side_slide = 0.7f;
+        back_car_front_slide = 0.5f;
+        back_car_side_slide = 0.8f;
     }
 
     public void SetForDrift()
@@ -133,8 +135,12 @@ public class SettingsCar : MonoBehaviour
     public void SaveToDB()
     {
     	if(CheckPrice(50))
-   	{
+   	    {
         DataBase.ExecuteQueryWithoutAnswer($"UPDATE 'car tech set' SET front_front =  '{front_car_front_slide}', front_side = '{front_car_side_slide}', back_front = '{back_car_front_slide}', back_side = '{back_car_side_slide}' WHERE id_car = '{id_car_text}'");
+        }
+        else
+        {
+            error.SetActive(true);
         }
     }
 
