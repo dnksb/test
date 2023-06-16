@@ -6,7 +6,7 @@ public class GarageCameraControl : MonoBehaviour
 {
     [SerializeField] private float speed_rotation;
     [SerializeField] private float speed_move;
-    
+
     private bool garage_animation_rotation = false;
 
     private bool choice_car_animation_rotation = false;
@@ -15,10 +15,11 @@ public class GarageCameraControl : MonoBehaviour
 
     private bool back_menu_camera_animation = false;
 
-    private void Start() 
+    private void Start()
     {
         transform.position = new Vector3(0, 0, 0);
         transform.Rotate(0, 0, 0);
+        transform.SetActive(true);
         //Debug.Log(transform.rotation.y);
     }
 
@@ -115,7 +116,7 @@ public class GarageCameraControl : MonoBehaviour
         visual_move_camera_animation = false;
         back_menu_camera_animation = false;
     }
-    
+
     public void OpenVisualSettings()
     {
         garage_animation_rotation = false;

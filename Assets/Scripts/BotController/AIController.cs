@@ -15,7 +15,9 @@ public class AIController : MonoBehaviour
 	public float Vertical;
 	public float MaxSpeed;
 	public float BrakeCof;
+
 	public bool trafic;
+	public bool LapsMode;
 
 	public Transform COM;
 
@@ -149,29 +151,45 @@ public class AIController : MonoBehaviour
 	{
 		var ts = DateTime.Now - StartTime;
 
+		float distance = (COM.transform.position - CheckPoint[CurrentCheckPoint].position).magnitude;
+
 		if(ts.TotalSeconds >= TimeRespawn)
 		{
-			if (Last == Math.Floor((COM.transform.position - CheckPoint[CurrentCheckPoint].position).magnitude))
-				{
-					if(CurrentCheckPoint != 0)
-						transform.position = CheckPoint[CurrentCheckPoint - 1].position;
-					else
-						transform.position = CheckPoint[CheckPoint.Count - 1].position;
+			if (Last == Math.Floor(distance))
+			{
+				if(LapsMode)
+                {
+                    if(CurrentCheckPoint != 0)
+                        transform.position = CheckPoint[CurrentCheckPoint - 1].position;
+                    else
+                        transform.position = CheckPoint[CheckPoint.Count - 1].position;
+                }
+                else
+                {
+                    transform.position = CheckPoint[CurrentCheckPoint - 1].position;
+                }
 
-				}
-			Last = Math.Floor((COM.transform.position - CheckPoint[CurrentCheckPoint].position).magnitude);
+			}
+			Last = Math.Floor(distance);
 			StartTime = DateTime.Now;
 		}
 
-		/*if((COM.transform.position - CheckPoint[CurrentCheckPoint].position).magnitude > 200)
+		if(distance > 200)
 			{
-				if(CurrentCheckPoint != 0)
-					transform.position = CheckPoint[CurrentCheckPoint - 1].position;
-				else
-					transform.position = CheckPoint[CheckPoint.Count - 1].position;
-			}*/
+				if(LapsMode)
+                {
+                    if(CurrentCheckPoint != 0)
+                        transform.position = CheckPoint[CurrentCheckPoint - 1].position;
+                    else
+                        transform.position = CheckPoint[CheckPoint.Count - 1].position;
+                }
+                else
+                {
+                    transform.position = CheckPoint[CurrentCheckPoint - 1].position;
+                }
+			}
 
-		if ((COM.transform.position - CheckPoint[CurrentCheckPoint].position).magnitude < 5 &&
+		if (distance < 10 &&
 			CurrentCheckPoint < CheckPoint.Count - 1)
 			CurrentCheckPoint = MathExtentions.LoopClamp (CurrentCheckPoint + 1, 0, CheckPoint.Count);
 
@@ -180,7 +198,7 @@ public class AIController : MonoBehaviour
 
 		if (!trafic) CheckBorders();
 
-		if ((COM.transform.position - CheckPoint[CurrentCheckPoint].position).magnitude < 30) Vertical *= BrakeCof;
+		if (distance < 30) Vertical *= BrakeCof;
 
 		ControlledCar.UpdateControls (Horizontal, Vertical, false);
 	}

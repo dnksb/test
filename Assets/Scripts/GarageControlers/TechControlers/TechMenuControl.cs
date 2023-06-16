@@ -98,7 +98,6 @@ public class TechMenuControl : MonoBehaviour
         if(syncLevel.isDone)
         {
             Loading.SetActive(false);
-            Camera.SetActive(false);
         }
     }
 }

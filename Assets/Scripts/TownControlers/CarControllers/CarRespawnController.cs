@@ -5,6 +5,8 @@ using UnityEngine;
 public class CarRespawnController : MonoBehaviour
 {
 
+    public bool LapsMode;
+
     [SerializeField] KeyCode SetCameraKey;
     [SerializeField] GameObject car;
     public Transform COM;
@@ -28,7 +30,7 @@ public class CarRespawnController : MonoBehaviour
         CheckPoint = list;
         CurrentCheckPoint = 0;
         CurrentAmountLaps = 0;
-        
+
     }
 
 
@@ -44,21 +46,32 @@ public class CarRespawnController : MonoBehaviour
             }
             else
             {
+                if(LapsMode)
+                {
+                    if(CurrentCheckPoint != 0)
+                        transform.position = CheckPoint[CurrentCheckPoint - 1].position;
+                    else
+                        transform.position = CheckPoint[CheckPoint.Count - 1].position;
+                }
+                else
+                {
+                    transform.position = CheckPoint[CurrentCheckPoint - 1].position;
+                }
+            }
+	    }
+        if(RaceMode)
+        {
+            float distance = (COM.transform.position - CheckPoint[CurrentCheckPoint].position).magnitude;
+            if(distance > 100 && RaceMode)
+            {
                 if(CurrentCheckPoint != 0)
                     transform.position = CheckPoint[CurrentCheckPoint - 1].position;
                 else
                     transform.position = CheckPoint[CheckPoint.Count - 1].position;
             }
-	    }
-        if((COM.transform.position - CheckPoint[CurrentCheckPoint].position).magnitude > 100 && RaceMode)
-        {
-            if(CurrentCheckPoint != 0)
-                transform.position = CheckPoint[CurrentCheckPoint - 1].position;
-            else
-                transform.position = CheckPoint[CheckPoint.Count - 1].position;
+            if (distance < 8 && RaceMode)
+                CurrentCheckPoint = MathExtentions.LoopClamp (CurrentCheckPoint + 1, 0, CheckPoint.Count);
         }
-        if ((COM.transform.position - CheckPoint[CurrentCheckPoint].position).magnitude < 8 && RaceMode)
-			CurrentCheckPoint = MathExtentions.LoopClamp (CurrentCheckPoint + 1, 0, CheckPoint.Count);
     }
 
 

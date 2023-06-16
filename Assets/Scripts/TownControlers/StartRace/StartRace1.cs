@@ -11,6 +11,10 @@ public class StartRace1 : MonoBehaviour
     public GameObject Race;
     public GameObject Bet;
 
+    public GameObject TextLap;
+
+    public bool IsBet;
+
     public GameObject StartPlace;
     public GameObject StartButton;
     public GameController Controller;
@@ -48,8 +52,26 @@ public class StartRace1 : MonoBehaviour
         Bet.SetActive(true);
     }
 
+    public void ApplyBet()
+    {
+        DataTable scoreboard;
+        scoreboard = DataBase.GetTable($"SELECT level FROM players WHERE nickname = '{ChoiceCarMenu.Nickname}'");
+
+        int maney = 0;
+
+        foreach (DataRow row in scoreboard.Rows)
+        {
+            var cells = row.ItemArray;
+
+	        maney = int.Parse(cells[0].ToString());
+        }
+        if(maney > 100)
+            IsBet = true;
+    }
+
     public void StartRace()
     {
+
         CurrentAmountLaps = 0;
         LoseMessage.SetActive(false);
         camera.GetComponent<CameraController> ().enabled = true;
@@ -57,6 +79,13 @@ public class StartRace1 : MonoBehaviour
         car.GetComponent<CarRespawnController> ().enabled = true;
         car.transform.position = StartPosition;
         car.transform.rotation = StartRotation;
+
+        int tmp = car.GetComponent<CarRespawnController>().CurrentAmountLaps;
+        if(AmountLaps <= ++tmp)
+            TextLap.transform.GetComponent<Text>().text = "ФИНИШ";
+        else
+            {TextLap.transform.GetComponent<Text>().text =
+                "КРУГ " + tmp.ToString();}
 
         Bet.SetActive(false);
         foreach (var carbot in Cars)
@@ -76,15 +105,23 @@ public class StartRace1 : MonoBehaviour
             if(car.GetComponent<CarRespawnController>().CurrentCheckPoint >= (
                 car.GetComponent<CarRespawnController>().CheckPoint.Count - 1))
             {
-                if(AmountLaps <= car.GetComponent<CarRespawnController>().CurrentAmountLaps)
+                int tmp = car.GetComponent<CarRespawnController>().CurrentAmountLaps;
+                if(AmountLaps <= tmp)
                     Win();
                 else car.GetComponent<CarRespawnController>().CurrentAmountLaps += 1;
+                if(AmountLaps <= ++tmp)
+                    TextLap.transform.GetComponent<Text>().text = "ФИНИШ";
+                else
+                    {TextLap.transform.GetComponent<Text>().text =
+                        "КОНЕЦ КРУГ " + (tmp + 1).ToString();}
             }
         else if(other.tag == "Bot")
+            Debug.Log((other.GetComponent<AIController>().CheckPoint.Count - 1));
             if(other.GetComponent<AIController>().CurrentCheckPoint >= (
                 other.GetComponent<AIController>().CheckPoint.Count - 1))
             {
-                if(AmountLaps <= other.GetComponent<AIController>().CurrentAmountLaps)
+                int tmp = other.GetComponent<AIController>().CurrentAmountLaps;
+                if(AmountLaps <= tmp)
                     Lose();
                 else
                 {
@@ -123,9 +160,12 @@ public class StartRace1 : MonoBehaviour
 
 	        maney = int.Parse(cells[0].ToString());
         }
-    	var tmp1 = DataBase.ExecuteQueryWithAnswer(
-            $"UPDATE players SET level = {maney + PriceOfWin} WHERE nickname = '{ChoiceCarMenu.Nickname}'");
-
+        if(IsBet)
+        {var tmp1 = DataBase.ExecuteQueryWithAnswer(
+                $"UPDATE players SET level = {maney + PriceOfWin + 100} WHERE nickname = '{ChoiceCarMenu.Nickname}'");}
+        else
+        {var tmp1 = DataBase.ExecuteQueryWithAnswer(
+                $"UPDATE players SET level = {maney + PriceOfWin} WHERE nickname = '{ChoiceCarMenu.Nickname}'");}
     }
 
     public void WinMessageClose()
@@ -151,6 +191,21 @@ public class StartRace1 : MonoBehaviour
         LoseMessage.SetActive(true);
         Race.SetActive(false);
         car.GetComponent<CarRespawnController> ().RaceMode = false;
+
+        DataTable scoreboard;
+        scoreboard = DataBase.GetTable($"SELECT level FROM players WHERE nickname = '{ChoiceCarMenu.Nickname}'");
+
+        int maney = 0;
+
+        foreach (DataRow row in scoreboard.Rows)
+        {
+            var cells = row.ItemArray;
+
+	        maney = int.Parse(cells[0].ToString());
+        }
+        if(IsBet)
+        {var tmp1 = DataBase.ExecuteQueryWithAnswer(
+                $"UPDATE players SET level = {maney - 100} WHERE nickname = '{ChoiceCarMenu.Nickname}'");}
 
         foreach (var carbot in Cars)
             carbot.SetActive(false);
