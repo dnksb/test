@@ -167,14 +167,26 @@ public class StartRace1 : MonoBehaviour
             level = int.Parse(cells[1].ToString());
         }
         string text = "";
-        Debug.Log(level);
         if(level == CurrentLevel)
         {
             text = HistoryText;
+            var tmp1 = DataBase.ExecuteQueryWithAnswer(
+                $"UPDATE players SET progress = {CurrentLevel + 1} WHERE nickname = '{ChoiceCarMenu.Nickname}'");
+            if(level == 1)
+            {
+                Guid myuuid = Guid.NewGuid();
+                string car_uid = myuuid.ToString();
+                DataBase.ExecuteQueryWithoutAnswer(
+                    $"INSERT INTO '{ChoiceCarMenu.Nickname}' (id_car, car, car_power) VALUES ('{car_uid}', 'Auris 2006', 76)");
+                DataBase.ExecuteQueryWithoutAnswer(
+                    $"INSERT INTO 'all cars set' VALUES ('{car_uid}', 'stock_auris_2006_front_fender', 'stock_auris_2006_back_fender', 'stock_auris_2006_front_bumper', 'stock_auris_2006_back_bumper', 'stock_auris_2006_threshold')");
+                DataBase.ExecuteQueryWithoutAnswer(
+                    $"INSERT INTO 'car tech set' VALUES ('{car_uid}', '2', '2', '2', '2')");
+            }
         }
         if(IsBet)
         {
-            text += $"вы победили\n+100$\n+{PriceOfWin}$";
+            text += $"\nвы победили\n+100$\n+{PriceOfWin}$\n";
             var tmp1 = DataBase.ExecuteQueryWithAnswer(
                 $"UPDATE players SET level = {maney + PriceOfWin + 100} WHERE nickname = '{ChoiceCarMenu.Nickname}'");}
         else
@@ -191,6 +203,7 @@ public class StartRace1 : MonoBehaviour
         car.GetComponent<CarController>().enabled = true;
         car.GetComponent<CarRespawnController> ().enabled = true;
         camera.GetComponent<CameraController> ().enabled = true;
+        IsBet = false;
     }
 
     public void LoseMessageClose()
@@ -200,6 +213,7 @@ public class StartRace1 : MonoBehaviour
         car.GetComponent<CarRespawnController> ().enabled = true;
         camera.GetComponent<CameraController> ().enabled = true;
         StartPlace.SetActive(true);
+        IsBet = false;
     }
 
     public void Lose()
@@ -231,48 +245,3 @@ public class StartRace1 : MonoBehaviour
         camera.GetComponent<CameraController> ().enabled = false;
     }
 }
-
-
-/*
-using UnityEngine;
-
-public class LoadingScreen : MonoBehaviour
-{
-    public Texture2D screenTexture;
-    private static LoadingScreen instance;
-    private static AsyncOperation syncLevel;
-    private static bool doneLoadingScene;
-
-    void Awake()
-    {
-        if (instance)
-        {
-            Destroy(gameObject);
-            return;
-        }
-        instance = this;
-        gameObject.AddComponent<GUITexture>().enabled = false;
-        guiTexture.texture = screenTexture;
-        transform.position = new Vector3(0.5f, 0.5f, 0.0f);
-        DontDestroyOnLoad(this);
-    }
-
-    public static void Load(string name)
-    {
-        if (!instance) return;
-        instance.guiTexture.enabled = true;
-        syncLevel = Application.LoadLevelAsync(name);
-        doneLoadingScene = true;
-    }
-
-    public void Update()
-    {
-        if (doneLoadingScene && syncLevel.isDone)
-        {
-            doneLoadingScene = false;
-            instance.guiTexture.enabled = false;
-        }
-    }
-}
-
-*/
