@@ -36,7 +36,7 @@ public class TechMenuControl : MonoBehaviour
 
 	        maney = int.Parse(cells[0].ToString());
         }
-        ManeyText.GetComponent<Text>().text = maney.ToString();
+        ManeyText.GetComponent<Text>().text = $"{maney}$";
     }
 
     public void ShowVusialSettings()

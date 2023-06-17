@@ -11,6 +11,10 @@ public class StartRace1 : MonoBehaviour
     public GameObject Race;
     public GameObject Bet;
 
+    public GameObject WinText;
+    public int CurrentLevel;
+    public string HistoryText;
+
     public GameObject TextLap;
 
     public bool IsBet;
@@ -150,22 +154,35 @@ public class StartRace1 : MonoBehaviour
         camera.GetComponent<CameraController> ().enabled = false;
 
         DataTable scoreboard;
-        scoreboard = DataBase.GetTable($"SELECT level FROM players WHERE nickname = '{ChoiceCarMenu.Nickname}'");
+        scoreboard = DataBase.GetTable($"SELECT level, progress FROM players WHERE nickname = '{ChoiceCarMenu.Nickname}'");
 
         int maney = 0;
+        int level = 0;
 
         foreach (DataRow row in scoreboard.Rows)
         {
             var cells = row.ItemArray;
 
 	        maney = int.Parse(cells[0].ToString());
+            level = int.Parse(cells[1].ToString());
+        }
+        string text = "";
+        Debug.Log(level);
+        if(level == CurrentLevel)
+        {
+            text = HistoryText;
         }
         if(IsBet)
-        {var tmp1 = DataBase.ExecuteQueryWithAnswer(
+        {
+            text += $"вы победили\n+100$\n+{PriceOfWin}$";
+            var tmp1 = DataBase.ExecuteQueryWithAnswer(
                 $"UPDATE players SET level = {maney + PriceOfWin + 100} WHERE nickname = '{ChoiceCarMenu.Nickname}'");}
         else
-        {var tmp1 = DataBase.ExecuteQueryWithAnswer(
+        {
+            text += $"вы победили\n+{PriceOfWin}$";
+            var tmp1 = DataBase.ExecuteQueryWithAnswer(
                 $"UPDATE players SET level = {maney + PriceOfWin} WHERE nickname = '{ChoiceCarMenu.Nickname}'");}
+        WinText.transform.GetComponent<Text>().text = text;
     }
 
     public void WinMessageClose()

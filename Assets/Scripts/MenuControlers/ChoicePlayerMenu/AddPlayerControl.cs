@@ -47,7 +47,7 @@ public class AddPlayerControl : MonoBehaviour
         }
         else
         {
-            DataBase.ExecuteQueryWithoutAnswer($"INSERT INTO players (nickname, level) VALUES ('{nickname}',{500})");
+            DataBase.ExecuteQueryWithoutAnswer($"INSERT INTO players (nickname, level, progress) VALUES ('{nickname}',{500}, {1})");
 
             Guid myuuid = Guid.NewGuid();
             car_uid = myuuid.ToString();
