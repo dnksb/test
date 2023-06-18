@@ -295,6 +295,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1853972687443030, guid: bf9011e389c4e9b45bbc6c8d8a0a8bbc, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4637037469409076, guid: bf9011e389c4e9b45bbc6c8d8a0a8bbc, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -1989,6 +1993,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b419df5066869c559b027b9bfebf4993, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  LapsMode: 0
   SetCameraKey: 114
   car: {fileID: 0}
   COM: {fileID: 0}

@@ -20,4 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Town.unity
     guid: 69f92937d8a96a4c8aaeee9b23f1f1be
+  - enabled: 1
+    path: Assets/Scenes/train.unity
+    guid: 1cced8f8f9dd2adf89f98b042814e738
   m_configObjects: {}

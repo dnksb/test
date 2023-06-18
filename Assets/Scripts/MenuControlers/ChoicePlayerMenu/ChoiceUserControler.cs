@@ -18,12 +18,12 @@ public class ChoiceUserControler : MonoBehaviour
 
     [SerializeField] private static string player_nickname;
     [SerializeField] private static int player_money;
-    
+
     public static string GetPlayerNickname()
     {
         return player_nickname;
     }
-    
+
     public static int GetPlayerMoney()
     {
         return player_money;
@@ -82,6 +82,11 @@ public class ChoiceUserControler : MonoBehaviour
     public void OpenGarage()
     {
         SceneManager.LoadScene("Garage");
+    }
+
+    public void OpenTrain()
+    {
+        SceneManager.LoadScene("train");
     }
 
 }
