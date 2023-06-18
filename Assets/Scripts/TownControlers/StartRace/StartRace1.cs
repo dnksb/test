@@ -15,6 +15,8 @@ public class StartRace1 : MonoBehaviour
     public int CurrentLevel;
     public string HistoryText;
 
+    public GameObject Credits;
+
     public GameObject TextLap;
 
     public bool IsBet;
@@ -138,6 +140,11 @@ public class StartRace1 : MonoBehaviour
             }
     }
 
+    public void CloseCredits()
+    {
+        Credits.SetActive(false);
+    }
+
     public void Win()
     {
         car.UpdateControls(0,0,true);
@@ -182,6 +189,10 @@ public class StartRace1 : MonoBehaviour
                     $"INSERT INTO 'all cars set' VALUES ('{car_uid}', 'stock_auris_2006_front_fender', 'stock_auris_2006_back_fender', 'stock_auris_2006_front_bumper', 'stock_auris_2006_back_bumper', 'stock_auris_2006_threshold')");
                 DataBase.ExecuteQueryWithoutAnswer(
                     $"INSERT INTO 'car tech set' VALUES ('{car_uid}', '2', '2', '2', '2')");
+            }
+            if (level == 3)
+            {
+                Credits.SetActive(true);
             }
         }
         if(IsBet)

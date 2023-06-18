@@ -14,12 +14,12 @@ public class PlayListController : MonoBehaviour
     [SerializeField] List<AudioClip> xtc;
     private List<List<AudioClip>> clips;
     public AudioSource audioSource;
-    
+
     public int nowFM = 0;
-    
+
     [SerializeField] KeyCode SetCameraKey;
     [SerializeField] GameObject musicName;
-    
+
     // Start is called before the first frame update
     void Start()
     {
@@ -30,7 +30,7 @@ public class PlayListController : MonoBehaviour
         clips.Add(Wladiwastock);
         clips.Add(rock);
         clips.Add(xtc);
-        
+
         audioSource.loop = false;
     }
 
@@ -38,7 +38,7 @@ public class PlayListController : MonoBehaviour
     {
         return clips[nowFM][Random.Range(0, clips[nowFM].Count)];
     }
-    
+
     void Update()
     {
         if(!audioSource.isPlaying)
@@ -48,16 +48,29 @@ public class PlayListController : MonoBehaviour
             musicName.transform.GetComponent<Text>().text = audioSource.clip.name;
         }
         if (Input.GetKeyDown (SetCameraKey))
-	{
-	    if(nowFM >= clips.Count - 1)
-	    	nowFM = 0;
-	    else
-	    	nowFM++;
-	    	
-                Debug.Log(nowFM);
-	    audioSource.clip = GetRandomClip();
-            audioSource.Play();
-            musicName.transform.GetComponent<Text>().text = audioSource.clip.name;
-	}
+        {
+            if(nowFM >= clips.Count - 1)
+                nowFM = 0;
+            else
+                nowFM++;
+
+                    Debug.Log(nowFM);
+            audioSource.clip = GetRandomClip();
+                audioSource.Play();
+                musicName.transform.GetComponent<Text>().text = audioSource.clip.name;
+        }
+    }
+
+    public void ChangeMusic()
+    {
+        if(nowFM >= clips.Count - 1)
+                nowFM = 0;
+            else
+                nowFM++;
+
+                    Debug.Log(nowFM);
+            audioSource.clip = GetRandomClip();
+                audioSource.Play();
+                musicName.transform.GetComponent<Text>().text = audioSource.clip.name;
     }
 }

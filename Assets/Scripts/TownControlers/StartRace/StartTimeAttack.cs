@@ -11,6 +11,7 @@ public class StartTimeAttack : MonoBehaviour
     public GameObject Bet;
 
     public Transform musicName;
+    public Transform music;
 
     public GameObject StartPlace;
     public GameObject StartButton;
@@ -94,6 +95,7 @@ public class StartTimeAttack : MonoBehaviour
 
     public void Win()
     {
+        music.GetComponent<PlayListController>().ChangeMusic();
         car.UpdateControls(0,0,true);
         WinMessage.SetActive(true);
         StartPlace.SetActive(true);
@@ -139,6 +141,7 @@ public class StartTimeAttack : MonoBehaviour
 
     public void Lose()
     {
+        music.GetComponent<PlayListController>().ChangeMusic();
         car.UpdateControls(0,0,true);
         LoseMessage.SetActive(true);
         Race.SetActive(false);
