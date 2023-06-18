@@ -8,7 +8,6 @@ using UnityEngine.SceneManagement;
 
 public class StartBowling : MonoBehaviour
 {
-    [SerializeField] private GameObject dificult;
     [SerializeField] private CarController car;
     [SerializeField] private GameObject bowlingButton;
     [SerializeField] private GameObject camera;
@@ -19,15 +18,6 @@ public class StartBowling : MonoBehaviour
     [SerializeField] private List<KidTrigger> Kids = new List<KidTrigger>();
 
 
-    public void ShowDificult(GameObject controller)
-    {
-    	car = controller.GetComponent<GameController>().Cars[controller.GetComponent<GameController>().CurrentCarIndex];
-
-    	dificult.SetActive(true);
-    	bowlingButton.SetActive(false);
-    	car.GetComponent<CarController>().enabled = false;
-    }
-
     public void StartEaseGame(GameObject controller)
     {
         car = controller.GetComponent<GameController>().Cars[controller.GetComponent<GameController>().CurrentCarIndex];
@@ -35,16 +25,20 @@ public class StartBowling : MonoBehaviour
             item.StartBouling();
 
         bowlingButton.SetActive(false);
+
+        car.GetComponent<CarRespawnController> ().enabled = false;
     	car.GetComponent<CarController>().enabled = true;
-     	
-    	car.transform.position = new Vector3(-50, 28, -6000);
-    	camera.transform.position = new Vector3(-50, 28, -6000);
+    	car.transform.position = new Vector3(-46, 27, -5924);
+        car.transform.rotation = Quaternion.Euler(0, 180, 0);
+    	camera.transform.position = new Vector3(-46, 27, -5924);
     }
 
     void OnTriggerEnter(Collider other)
     {
         if(other.tag == "Car")
         {
+            car.GetComponent<CarController>().enabled = false;
+            camera.GetComponent<CameraController> ().enabled = false;
             int amount = 0;
             foreach (KidTrigger item in Kids)
                 if(item.IsBroke)
@@ -72,7 +66,12 @@ public class StartBowling : MonoBehaviour
     public void CloseWin()
     {
         Win.SetActive(false);
-        car.transform.position = new Vector3(0, 5, 0);
-    	camera.transform.position = new Vector3(0, 5, 0);
+        car.GetComponent<CarController>().enabled = true;
+        camera.GetComponent<CameraController> ().enabled = true;
+        car.GetComponent<CarRespawnController> ().enabled = true;
+
+        car.transform.rotation = Quaternion.Euler(0, 0, 0);
+        car.transform.position = new Vector3(-146.9f, 2, -86.5f);
+    	camera.transform.position = new Vector3(-146.9f, 2, -86.5f);
     }
 }
