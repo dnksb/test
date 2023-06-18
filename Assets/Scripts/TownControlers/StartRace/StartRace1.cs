@@ -14,6 +14,7 @@ public class StartRace1 : MonoBehaviour
     public GameObject WinText;
     public int CurrentLevel;
     public string HistoryText;
+    public bool ShowCredits;
 
     public GameObject Credits;
 
@@ -42,6 +43,7 @@ public class StartRace1 : MonoBehaviour
     public void Start()
     {
         Race.SetActive(false);
+        ShowCredits = false;
     }
 
     public void ShowBet()
@@ -190,8 +192,10 @@ public class StartRace1 : MonoBehaviour
                 DataBase.ExecuteQueryWithoutAnswer(
                     $"INSERT INTO 'car tech set' VALUES ('{car_uid}', '2', '2', '2', '2')");
             }
+            ShowCredits = false;
             if (level == 3)
             {
+                ShowCredits = true;
                 Credits.SetActive(true);
             }
         }
@@ -214,6 +218,8 @@ public class StartRace1 : MonoBehaviour
         car.GetComponent<CarController>().enabled = true;
         car.GetComponent<CarRespawnController> ().enabled = true;
         camera.GetComponent<CameraController> ().enabled = true;
+        if(ShowCredits)
+            Credits.SetActive(true);
         IsBet = false;
     }
 
